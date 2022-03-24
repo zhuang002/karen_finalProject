@@ -1,0 +1,85 @@
+.menubar {
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 18px;
+  padding: 4px;
+  margin: 10px;
+  border-bottom: 2px solid cornflowerblue;
+}
+.menu {
+  color: #389256;
+  width: 10%;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: bottom;
+  font-weight: bold;
+}
+
+.menu:hover {
+  text-decoration: underline;
+}
+
+.footinfo {
+  width: 25%;
+  padding-right: 40;
+  padding-left: 40;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: sans-serif;
+  color: white;
+}
+
+.footheader {
+  font-weight: bold;
+}
+
+.content {
+  background-color: white;
+}
+
+.button {
+  font-size: 18px;
+  padding: 8px;
+  color: white;
+  background-color: cornflowerblue;
+  margin: 40px;
+  border-radius: 5px;
+  border: 0px;
+  cursor: pointer;
+}
+
+.gallery {
+  background-color: #b1bdb2;
+  padding: 20px;
+}
+
+.textPicture {
+  display: inline-block;
+  background-color: white;
+  font-family: sans-serif;
+  padding: 10px;
+  border: 2px grey outset;
+  border-radius: 5px;
+}
+
+.tp_title {
+  margin: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.tp_text {
+  margin: 10px;
+  font-size: 14px;
+}
+
+.wizardControl {
+  background-color: gray;
+  text-align: center;
+  padding: 20px;
+}
+
+.wizardControl button {
+  display: inline-block;
+  padding: 10px;
+}

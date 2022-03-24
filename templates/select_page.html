@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class = "select_page">
+        <div class="select_page_desc">
+            {% page["description"] %}
+        </div>
+        <div>
+            {% for option in page["selections"] %}
+                {% href = "/wizard/"+option['link'] %}
+                <div class="select_option" onclick="window.location.ref='{%href%}'">
+                    <div>
+                        <img src="{% url_for('static', option['img']) %}">
+                    </div>
+                    <div class="select_option_name">
+                        {% option["name"] %}
+                    </div>
+                    <div class="select_option_desc">
+                        {% option["description"] %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
