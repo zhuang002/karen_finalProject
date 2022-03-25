@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for
+from wizard import Wizard
 
+wiz = Wizard()
 app = Flask("__main__")
 
 
@@ -10,12 +12,12 @@ def home():
 
 @app.route("/quote")
 def quote():
-    return render_template('quote_home.html')
+    return wiz.render_page("select-floor")
 
 
-@app.route("/wizard/{%wizard_page_key%}")
-def quote():
-    return render_wizard_page(wizard_page_key)
+@app.route("/wizard/<page_key>", methods=["GET", "POST"])
+def go_wizard(page_key):
+    return wiz.render_page(page_key)
 
 
 if __name__ == '__main__':

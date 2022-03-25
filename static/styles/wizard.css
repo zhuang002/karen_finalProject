@@ -1,42 +1,95 @@
 .select_page {
+  background-color: #b1bdb2;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.select_page img {
+  width: 240;
+  height: 240;
 }
 
 .select_page_desc {
+  font-weight: bold;
+  font-size: larger;
+  padding: 20px;
 }
 
 .select_option {
+  display: inline-block;
+  background-color: white;
+  font-family: sans-serif;
+  padding: 10px;
+  border: 2px grey outset;
+  border-radius: 5px;
+}
+
+.select_option:hover {
+  border-color: red;
+  background-color: silver;
 }
 
 .select_option_name {
+  margin: 10px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .select_option_desc {
+  margin: 10px;
+  font-size: 14px;
 }
 
 .input_field_title {
+  display: inline-block;
+  text-overflow: nowrap;
+  width: 30%;
+  max-width: 100px;
 }
 
 .input_field_input {
+  display: inline-block;
+  text-overflow: nowrap;
 }
 
 .input_field_unit {
+  display: inline-block;
+  text-overflow: nowrap;
 }
 
 .input_field_desc {
+  padding-top: 10px;
 }
 
-
 .input_page {
+  font-family: sans-serif;
+  text-align: center;
 }
 
 .input_page_desc {
 }
 
 .input_group {
+  border: 1px silver solid;
 }
 
 .input_group_desc {
+  padding: 10px;
+  font-weight: bold;
+  background-color: rgba(172, 203, 243, 0.541);
 }
 
 .input_field {
+  margin: 20px;
+}
+
+.next_button {
+  margin: 20px;
+  padding-left: 10px;
+  padding-right: 10;
+  color: blue;
+  background-color: rgba(172, 203, 243, 0.541);
+  font-size: 20;
+  text-align: center;
+  border-radius: 10px;
 }

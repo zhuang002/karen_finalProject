@@ -1,26 +1,29 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
+<form method="POST" action="./submit">
     <div class="input_page">
-        <div class="input_page_desc">
-            {% page["description"] %}
-        </div>
+        <div class="input_page_desc">{{ data["description"] or '' }}</div>
         <div>
-            {% for input_group in page["inputGroups"] %}
-                <div class="input_group">
-                    <div class="input_group_desc">
-                        <% input_group["description"] %>
-                    </div>
-                    {% for input_field in input_group['inputFields']%}
-                        <div class="input_field">
-                            <a class="input_field_title">{% input_field["title"] %}</a>
-                            <input class="input_field_input" type="text" value="{% input_field['default'] %}">
-                            <a class="input_field_unit">{% input_field["unit"]%}</a>
-                            <div class="input_field_desc"></div>
-                        </div>
-                    {%endfor%}
+            {% for input_group in data["inputGroups"] %}
+            <div class="input_group">
+                <div class="input_group_desc">
+                    {{ input_group["description"] or '' }}
                 </div>
+                {% for input_field in input_group['inputFields']%}
+                <div class="input_field">
+                    <div class="input_field_title">{{ input_field["title"] }}</div>
+                    <input class="input_field_input" type="text" value="{{ input_field['default'] }}" />
+                    <div class="input_field_unit">{{ input_field["unit"] or '' }}</div>
+                    <br />
+                    <div class="input_field_desc">
+                        {{input_field["description"] or ''}}
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
             {% endfor %}
         </div>
+        <div>
+            <input class="next_button" type="submit" value="next">
+        </div>
     </div>
-{% endblock %}
+    {% endblock %}

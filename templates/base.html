@@ -1,17 +1,18 @@
 <html >
     <head>
         <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/wizard.css')}}">
         <script src="https://kit.fontawesome.com/1e8497a099.js" crossorigin="anonymous"></script>
         <script src="{{ url_for('static', filename='js/index.js') }}"></script>
     </head>
 
     <body onload="{% block onload %} {% endblock %}" >
         <div style="margin:40px">
-            <div id="banner" style="height:200px;background:url('static/img/banner3.jpg'); background-size: cover;"></div>
+            <div id="banner" class="banner"></div>
             <div id="menu" class="menubar">
                 <table width="100%" cellspacing="0"> 
                     <tr>
-                        <td class="menu"><img src="static/img/logo.png"/></td>
+                        <td class="menu"><img src="{{url_for('static', filename='img/logo.png')}}"/></td>
                         <td class="menu" onclick="renderHome(content)"><a>Home</a></td>
                         <td class="menu" onclick="renderService(content)"><a>Services</a></as></td>
                         <td class="menu" onclick="renderProjects()"><a>Projects</a></td>
