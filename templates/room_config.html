@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="project">
+    <form action="/project" method="post">
+        <div class="project_title">Configure a room</div>
+        <div>
+            <table>
+                <tr>
+                    <td>Room ID</td>
+                    <td><input name="room_id" readonly type="text" value="{{data['room'].id}}"></td>
+                </tr>
+                <tr>
+                    <td>Room Type</td>
+                    <td>
+                        {% if data['room'].type=='washroom'%}
+                        <input name="room_type" readonly type="text" value="{{data['room'].type}}">
+                        {% else %}
+                        <select name="room_type">
+                            <option value="bedroom">Bed Room</option>
+                            <option value="closet">Closet</option>
+                            <option value="kitchen">Kitchen</option>
+                            <option value="dinning_room">Dinning Room</option>
+                            <option value="family_room">Family Room</option>
+                            <option value="living_room">Living Room</option>
+                            <option value="library">Library</option>
+                        </select>
+                        {% endif %}
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input name="room_name" type="text" value="{{data['room'].name}}"></td>
+                </tr>
+                <tr>
+                    <td>Width</td>
+                    <td><input name="room_width" type="text" value="{{data['room'].width}}"></td>
+                </tr>
+                <tr>
+                    <td>Length</td>
+                    <td><input name="room_length" type="text" value="{{data['room'].length}}"></td>
+                </tr>
+                <tr>
+                    <td>Height</td>
+                    <td><input name="room_height" type="text" value="{{data['room'].height}}"></td>
+                </tr>
+                <tr>
+                    <td>Wall Paint</td>
+                    <td>
+                        <input name="room_wallpaint" type="text" value="{{data['room'].wall_paint}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Base Board</td>
+                    <td>
+                        <input name="room_baseboard" type="text" value="{{data['room'].baseboard}}">
+                    </td>
+                </tr>
+            </table><br><br>
+            {% if data['room'].type == 'washroom'%}
+            <span class="material_title">Vanity</span><input name="vanity" type="text" value="{{data['room'].vanity}}"><br>
+            <br>
+            <div class="material_selection">
+                {% for mat in data['vanity'] %}
+                <div class="textPicture">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td>
+                                <img class="material_pic" src="url_for('static',filename='img/{{mat.picture}}'">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tp_title">
+                                mat.name
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tp_text">
+                                mat.description
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+            <br>
+            <span class="material_title">Toilet</span><input name="toilet" type="text" value="{{data['room'].toilet}}"><br>
+            <div>
+                {% for mat in data['toilet'] %}
+
+                {% endfor %}
+            </div>
+            <span class="material_title">Shower</span><input name="shower" type="text" value="{{data['room'].shower or ''}}"><br>
+            <div>
+                {% for mat in data['shower'] %}
+
+                {% endfor %}
+            </div>
+            <span class="material_title">Toilet</span><input name="bathtub" type="text" value="{{data['room'].bathtub or ''}}"><br>
+            <div>
+                {% for mat in data['bathtub'] %}
+
+                {% endfor %}
+            </div>
+
+            {% endif %}
+            {% if data['room'].type=="laundry"%}
+            {% endif %}
+
+            <input type="submit">
+
+        </div>
+    </form>
+</div>
+
+{% endblock%}

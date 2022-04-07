@@ -1,0 +1,40 @@
+.project_config {
+  border: 1px solid cornflowerblue;
+  margin: 20px;
+  font-family: sans-serif;
+}
+
+.project_title {
+  background-color: cornflowerblue;
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+  color: white;
+}
+
+.floor {
+}
+
+.project_subtitle {
+  font-weight: bold;
+  font-size: large;
+}
+
+.room_data {
+  margin-left: 20px;
+  width: 80%;
+}
+
+.room_header {
+  font-weight: bold;
+  background-color: silver;
+}
+
+.project_button {
+  margin-left: 20px;
+  padding: 5px;
+  color: white;
+  background-color: cornflowerblue;
+  border-radius: 5px;
+  border: 0px;
+}

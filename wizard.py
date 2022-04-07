@@ -1,65 +1,152 @@
 from flask import render_template
 
 
+class HtmlComponent:
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False) -> None:
+        self.key = key
+        self.name = name
+        self.description = desc
+        self.next = None
+        self.skip = False
+
+    def __str__(self) -> str:
+        pass
+
+    def getNext(self):
+        return self.next
+
+
+class SelectOptionCtrl(HtmlComponent):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, img: str = None) -> None:
+        super().__init__(key, name, desc, next, skip)
+        self.img = img
+
+    def __str__(self) -> str:
+        pass
+
+
+class SelectCtrl(HtmlComponent):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, selections: list[SelectOptionCtrl] = []) -> None:
+        super().__init__(key, name, desc, next, skip)
+        self.selections: list[SelectOptionCtrl] = selections
+
+    def __str__(self) -> str:
+        return super().__str__()
+
+
+class SelectMulCtrl(SelectCtrl):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, selections: list[SelectOptionCtrl] = []) -> None:
+        super().__init__(key, name, desc, next, skip, selections)
+
+    def __str__(self) -> str:
+        return super().__str__()
+
+
+class SelectSingleCtrl(SelectCtrl):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, selections: list[SelectOptionCtrl] = []) -> None:
+        super().__init__(key, name, desc, next, skip, selections)
+
+    def __str__(self) -> str:
+        return super().__str__()
+
+
+class InputFieldCtrl(HtmlComponent):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, tp: type = int) -> None:
+        super().__init__(key, name, desc, next, skip)
+        self.tp: type = tp
+
+
+class InputGroupCtrl(HtmlComponent):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, fields: list[InputFieldCtrl] = []) -> None:
+        super().__init__(key, name, desc, next, skip)
+        self.inputFields: list[InputFieldCtrl] = fields
+
+    def __str__(self) -> str:
+        return super().__str__()
+
+
+class InputCtrl(HtmlComponent):
+    def __init__(self, key: str, name: str, desc: str, next: str = None, skip: bool = False, groups: list[InputGroupCtrl] = []) -> None:
+        super().__init__(key, name, desc, next, skip)
+        self.inputGroups: list[InputGroupCtrl] = groups
+
+    def __str__(self) -> str:
+        pass
+
+
 class Wizard:
     def __init__(self):
         self._pages = {
             "select-floor":
             {
-                "type": "Select",
-                "key": "select-floor", 
+                "type": "SelectMulti",
+                "key": "select-floor",
                 "description": "choose which floor to customize:",
+                "next-link": "upper-room-config",
+                "skip": False,
                 "selections": [
                     {
                         "key": "upper-floor",
                         "name": "Upper Floor",
                         "description": None,
                         "img": "img/upper-floor.png",
-                        "link": "upper-room-config"
+                        "link": None
                     },
                     {
                         "key": "main-floor",
                         "name": "Main Floor",
                         "description": None,
                         "img": "img/main-floor.png",
-                        "link": ""
+                        "link": None
                     },
                     {
                         "key": "basement",
                         "name": "Basement",
                         "description": None,
                         "img": "img/basement.png",
-                        "link": ""
+                        "link": None
                     },
-                    
                 ]
+
             },
             "upper-room-config":
             {
-                "type": "Menu",
+                "type": "Input",
                 "key": "upper-room-config",
-                "description": None,
-                "selections": [
+                "description": "Please input the number of rooms",
+                "next-link": "room-dimension",
+                "skip": False,
+                "inputGroups": [
                     {
-                        "key": "bedroom-office",
-                        "name": "Bedroom/Office",
+                        "name": None,
                         "description": None,
-                        "img": "img/bedroom-office.png",
-                        "link": "room-dimension"
-                    },
-                    {
-                        "key": "bathroom",
-                        "name": "Bathroom",
-                        "description": None,
-                        "img": "img/bathroom.png",
-                        "link": "room-dimension"
-                    },
-                    {
-                        "key": "laundry-room",
-                        "name": "Laundry Room",
-                        "description": None,
-                        "img": "img/separate-laundry-room.png",
-                        "link": "room-dimension"
+                        "repeat": 1,
+                        "inputFields": [
+                            {
+                                "key": "bedroom_number",
+                                "name": "Bedrooms",
+                                "description": "Please input the total number of bedrooms",
+                                "type": "Number",
+                                "default": "2",
+                                "unit": None
+                            },
+                            {
+                                "key": "bathroom_number",
+                                "name": "Bathrooms",
+                                "description": "Please input the total number of bathrooms",
+                                "type": "Number",
+                                "default": "2",
+                                "unit": None
+                            },
+                            {
+                                "key": "laundry_number",
+                                "name": "Landries",
+                                "description": "Please input the total number of laundries",
+                                "type": "Number",
+                                "default": "1",
+                                "unit": None
+                            }
+                        ]
                     }
                 ]
             },
@@ -68,9 +155,13 @@ class Wizard:
                 "type": "Input",
                 "key": "room-dimension",
                 "description": None,
-                "inputGroups": [
+                "skip": False,
+                "next-link": "upper-renovation",
+                "inputGroupsRepeat": [
                     {
+                        "Name": "Room",
                         "description": "Room Dimension",
+                        "repeat": 1,
                         "inputFields": [
                             {
                                 "key": "width",
@@ -92,11 +183,10 @@ class Wizard:
                         ]
                     }
                 ],
-                "link": "upper-renovations"
             },
             "upper-renovations":
             {
-                "type": "Menu",
+                "type": "Input",
                 "key": "upper-renovations",
                 "description": None,
                 "selections": [
@@ -264,11 +354,3 @@ class Wizard:
         }
 
     def render_page(self, page_key: str) -> str:
-        page = self._pages[page_key]
-        tp = page["type"]
-        if tp == "Select" or tp == "Menu":
-            return render_template("select_page.html", data=page)
-        elif tp == "Input":
-            return render_template("input_page.html", data=page)
-
-

@@ -93,3 +93,14 @@
   text-align: center;
   border-radius: 10px;
 }
+
+.material_title {
+    width: 200px;
+    background-color:yellow;
+    font-family: sans-serif;
+}
+
+.material_pic {
+    width: 200px;
+    height: 200px;
+}

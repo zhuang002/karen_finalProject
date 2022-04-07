@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="project_config">
+    <div class="project_title">Configure Your Project</div>
+    <div class="floor">
+        <div class="project_subtitle">Main Floor</div>
+        <table class="room_data">
+            <thead class="room_header">
+                <tr>
+                    <td>Room Type</td>
+                    <td>Room Name</td>
+                    <td>Width</td>
+                    <td>Length</td>
+                    <td>Height</td>
+                    <td>Wall Paint</td>
+                    <td>Base Board</td>
+
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in data.main_floor %}
+                {% if room.type != "washroom" and room.type != "laundry"%}
+                <tr>
+                    <td>{{room.type}}</td>
+                    <td>{{room.name}}</td>
+                    <td>{{room.width}}</td>
+                    <td>{{room.length}}</td>
+                    <td>{{room.height}}</td>
+                    <td>{{room.wall_paint}}</td>
+                    <td>{{room.baseboard}}</td>
+                    <td><a href="/project/edit/{{room.id}}">edit</a>
+                        /<a href="/project/delete/{{room.id}}">delete</a>
+                    </td>
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="room_data">
+            <thead class="room_header">
+                <tr>
+                    <td>Room Type</td>
+                    <td>Room Name</td>
+                    <td>Width</td>
+                    <td>Length</td>
+                    <td>Height</td>
+                    <td>Wall Paint</td>
+                    <td>Base Board</td>
+                    <td>Vanity</td>
+                    <td>Toilet</td>
+                    <td>Shower</td>
+                    <td>Bathtub</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in data.main_floor %}
+                {% if room.type=='washroom'%}
+                <tr>
+                    <td>{{room.type}}</td>
+                    <td>{{room.name}}</td>
+                    <td>{{room.width}}</td>
+                    <td>{{room.length}}</td>
+                    <td>{{room.height}}</td>
+                    <td>{{room.wall_paint}}</td>
+                    <td>{{room.baseboard}}</td>
+                    <td>{{room.vanity}}</td>
+                    <td>{{room.toilet}}</td>
+                    <td>{{room.shower}}</td>
+                    <td>{{room.bathtub}}</td>
+                    <td><a href="/project/edit/{{room.id}}">edit</a>
+                        /<a href="/project/delete/{{room.id}}">delete</a>
+                    </td>
+
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br><br>
+        <a class="project_button" href="/project/add/main_floor/room">Add new room</a>
+        <a class="project_button" href="/project/add/main_floor/washroom">Add a washroom</a>
+        <br>
+        <br>
+    </div>
+</div>
+
+{% endblock%}

@@ -1,106 +1,111 @@
-<html >
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css')}}">
-        <link rel="stylesheet" href="{{ url_for('static',filename='styles/wizard.css')}}">
-        <script src="https://kit.fontawesome.com/1e8497a099.js" crossorigin="anonymous"></script>
-        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
-    </head>
+<html>
 
-    <body onload="{% block onload %} {% endblock %}" >
-        <div style="margin:40px">
-            <div id="banner" class="banner"></div>
-            <div id="menu" class="menubar">
-                <table width="100%" cellspacing="0"> 
-                    <tr>
-                        <td class="menu"><img src="{{url_for('static', filename='img/logo.png')}}"/></td>
-                        <td class="menu" onclick="renderHome(content)"><a>Home</a></td>
-                        <td class="menu" onclick="renderService(content)"><a>Services</a></as></td>
-                        <td class="menu" onclick="renderProjects()"><a>Projects</a></td>
-                        <td style="text-align: right; vertical-align:bottom">
-                            <a class="button" onclick="renderQuote(content)">Get Quotes</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div id="content">
-                {% block content %}
-                {% endblock%}
-            </div>
-            <div id="footer" style="text-align: center;background: url(static/img/banner.jpg) no-repeat;">
-                <table style="width:70%; margin-left: auto; margin-right: auto;">
-                    <thead>
-                        <td class="footinfo footheader"></td>
-                        <td class="footinfo footheader">GET IN TOUCH</td>
-                        <td class="footinfo footheader">BUSINESS HOURS</td>
-                        <td class="footinfo footheader">SERVICES</td>
-                    </thead>
-                    <tbody>
-                        <td class="footinfo" style="font-size:larger;text-align: center;vertical-align: top;">We help home owners renovating their homes.</td>
-                        <td class="footinfo">
-                            <ul class="fa-ul">
-                                <li>
-                                    <p>
-                                        <i class="fa-li fa fa-map-marker">
-                                        </i>
-                                        11 Fairburn Dr. Unit 27, Markham ON Canada
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/index.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/project.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/wizard.css')}}">
+    <script src="https://kit.fontawesome.com/1e8497a099.js" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</head>
+
+<body onload="{% block onload %} {% endblock %}">
+    <div style="margin:40px">
+        <div id="banner" class="banner"></div>
+        <div id="menu" class="menubar">
+            <table width="100%" cellspacing="0">
+                <tr>
+                    <td class="menu"><img src="{{url_for('static', filename='img/logo.png')}}" /></td>
+                    <td class="menu" onclick="renderHome(content)"><a>Home</a></td>
+                    <td class="menu" onclick="renderService(content)"><a>Services</a></as>
+                    </td>
+                    <td class="menu" onclick="renderProjects()"><a>Projects</a></td>
+                    <td style="text-align: right; vertical-align:bottom">
+                        <a class="button" onclick="renderQuote(content)">Get Quotes</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock%}
+        </div>
+        <div id="footer" style="text-align: center;background: url(static/img/banner.jpg) no-repeat;">
+            <table style="width:70%; margin-left: auto; margin-right: auto;">
+                <thead>
+                    <td class="footinfo footheader"></td>
+                    <td class="footinfo footheader">GET IN TOUCH</td>
+                    <td class="footinfo footheader">BUSINESS HOURS</td>
+                    <td class="footinfo footheader">SERVICES</td>
+                </thead>
+                <tbody>
+                    <td class="footinfo" style="font-size:larger;text-align: center;vertical-align: top;">We help home
+                        owners renovating their homes.</td>
+                    <td class="footinfo">
+                        <ul class="fa-ul">
+                            <li>
+                                <p>
+                                    <i class="fa-li fa fa-map-marker">
+                                    </i>
+                                    11 Fairburn Dr. Unit 27, Markham ON Canada
+                                </p>
+                            </li>
+                            <li>
+                                <p>
                                     <i class="fa-li fa fa-phone">
                                     </i>
                                     Call us : + 1 416 918 3289
                                 </p>
-                                </li>
-                                <li>
-                                    <p>
-                                        <i class="fa-li fa fa-envelope-o">
-                                        </i>
-                                        Email us : emcmillwork@yahoo.ca</i>
-                                    </p>
-                                </li>
-                            </ul>
-                        </td>
-                        <td class="footinfo">
-                            <p>Monday to Friday : 9 am to 8 pm</p>
-                            <p>Saturday : 10 am to 4 pm</p>
-                            <p>Sunday : Closed</p>
-                            <p>Support Hours in 24/7 Everyday</p>
-                        </td>
-                        <td class="footinfo">
-                            <ul>
-                                <li>
-                                    Painting/wood work
-                                </li>
-                                <li>
-                                    Hard wood floor
-                                </li>
-                                <li>
-                                    basement renovation
-                                </li>
-                                <li>
-                                    old house remodel
-                                </li>
-                                <li>
-                                    Kitchen/bathroom
-                                </li>
-                                <li>
-                                    Ceramic tiles/Marble
-                                </li>
-                                <li>
-                                    Plumbing/Electricity
-                                </li>
-                                <li>
-                                    Basement leak repair
-                                </li>
-                                <li>
-                                    Landscaping/wood fence and More
-                                </li>
-                            </ul>
-                        </td>
-                    </tbody>
-                </table>
-            </div>
+                            </li>
+                            <li>
+                                <p>
+                                    <i class="fa-li fa fa-envelope-o">
+                                    </i>
+                                    Email us : emcmillwork@yahoo.ca</i>
+                                </p>
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="footinfo">
+                        <p>Monday to Friday : 9 am to 8 pm</p>
+                        <p>Saturday : 10 am to 4 pm</p>
+                        <p>Sunday : Closed</p>
+                        <p>Support Hours in 24/7 Everyday</p>
+                    </td>
+                    <td class="footinfo">
+                        <ul>
+                            <li>
+                                Painting/wood work
+                            </li>
+                            <li>
+                                Hard wood floor
+                            </li>
+                            <li>
+                                basement renovation
+                            </li>
+                            <li>
+                                old house remodel
+                            </li>
+                            <li>
+                                Kitchen/bathroom
+                            </li>
+                            <li>
+                                Ceramic tiles/Marble
+                            </li>
+                            <li>
+                                Plumbing/Electricity
+                            </li>
+                            <li>
+                                Basement leak repair
+                            </li>
+                            <li>
+                                Landscaping/wood fence and More
+                            </li>
+                        </ul>
+                    </td>
+                </tbody>
+            </table>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
