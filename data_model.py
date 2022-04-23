@@ -24,6 +24,12 @@ class WashRoom(Room):
         self.bathtub = None
 
 
+class Laundry(Room):
+    def __init__(self) -> None:
+        super().__init__()
+        self.watertub = None
+
+
 class Stair:
     def __init__(self) -> None:
         self.style: str = None

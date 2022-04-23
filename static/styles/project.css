@@ -1,6 +1,7 @@
 .project_config {
   border: 1px solid cornflowerblue;
   margin: 20px;
+  padding:20px;
   font-family: sans-serif;
 }
 
@@ -22,7 +23,7 @@
 
 .room_data {
   margin-left: 20px;
-  width: 80%;
+  width: 95%;
 }
 
 .room_header {
@@ -37,4 +38,5 @@
   background-color: cornflowerblue;
   border-radius: 5px;
   border: 0px;
+  text-decoration:none;
 }

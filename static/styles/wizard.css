@@ -57,6 +57,8 @@
   text-overflow: nowrap;
 }
 
+
+
 .input_field_desc {
   padding-top: 10px;
 }
@@ -94,13 +96,42 @@
   border-radius: 10px;
 }
 
+.material_selection {
+    width:200px;
+    height:300px;
+    display: inline-block;
+  background-color: white;
+  font-family: sans-serif;
+  padding: 10px;
+  border: 2px grey outset;
+  border-radius: 5px;
+}
+
+.material_selection:hover {
+    border: 3px cornflowerblue solid;
+    background-color: lightgrey;
+}
+
 .material_title {
-    width: 200px;
+    display:inline-block;
+    width: 100px;
     background-color:yellow;
     font-family: sans-serif;
+    font-weight:bold;
 }
 
 .material_pic {
     width: 200px;
     height: 200px;
+}
+
+.material_selected {
+    width:200px;
+    height:300px;
+    display: inline-block;
+    border: 3px red solid;
+    background-color: lightgrey;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: sans-serif;
 }

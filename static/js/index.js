@@ -205,3 +205,33 @@ function renderServices() {
 function renderProjects() {
     content.innerHTML ="<div>This is projects</div>"
 }
+
+function chooseMaterial(type, matEle) {
+    for (var i=0; i< matEle.parentElement.children.length;i++) {
+        div = matEle.parentElement.children[i];
+        div.className = "material_selection";
+    }
+    document.getElementsByName(type)[0].value = matEle.getAttribute('prodcode');
+    matEle.className = 'material_selected';
+}
+
+function onChangeRoomType(eleSelect) {
+    hideAllEquipments()
+    if (eleSelect.value == "washroom") {
+        document.getElementById("vanity_panel").style.display="";
+        document.getElementById("toilet_panel").style.display="";
+        document.getElementById("shower_panel").style.display="";
+        document.getElementById("bathtub_panel").style.display="";
+    }
+    else if (eleSelect.value == "laundry") {
+        document.getElementById("watertub_panel").style.display="";
+    }
+}
+
+function hideAllEquipments() {
+    document.getElementById("vanity_panel").style.display="none";
+    document.getElementById("toilet_panel").style.display="none";
+    document.getElementById("shower_panel").style.display="none";
+    document.getElementById("bathtub_panel").style.display="none";
+    document.getElementById("watertub_panel").style.display="none";
+}

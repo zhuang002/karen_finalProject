@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, session, redirect, request
 import pickle
-from data_model import Project, Room, WashRoom
+from data_model import Project, Room, WashRoom, Laundry
 import csv
 from data_model import Material
 
@@ -42,22 +42,6 @@ def project_config():
     else:
         project = Project()
         session['project_data'] = pickle.dumps(project)
-    room_type = request.form.get('room_type')
-    if room_type:
-        room = project.find_room_by_id(int(request.form.get('room_id')))
-        room.type = request.form.get('room_type')
-        room.name = request.form.get('room_name')
-        room.width = int(request.form.get('room_width'))
-        room.length = int(request.form.get('room_length'))
-        room.height = int(request.form.get('room_height'))
-        room.wall_paint = request.form.get('room_wallpaint')
-        room.baseboard = request.form.get('room_baseboard')
-        if isinstance(room, WashRoom):
-            room.vanity = request.form.get('vanity')
-            room.toilet = request.form.get('toilet')
-            room.shower = request.form.get('shower')
-            room.bathtub = request.form.get('bathtub')
-        session['project_data'] = pickle.dumps(project)
     return render_template("/project.html", data=project)
 
 
@@ -69,29 +53,79 @@ def room_delete(room_id: int):
     return redirect("/project")
 
 
-@app.route("/project/edit/<string:room_id>")
+@app.route("/project/edit/<int:room_id>")
 def room_edit(room_id: int):
-    op = "edit"
     project = pickle.loads(session['project_data'])
-    room = project.get_room_by_id(room_id)
-    return render_template("/room_config.html", data=room)
+    room = project.find_room_by_id(room_id)
+    vanity = get_material(os.getcwd() + url_for("static", filename="data/vanity.csv"))
+    toilet = get_material(os.getcwd() + url_for("static", filename="data/toilet.csv"))
+    config_data = {"room": room, "operation": "edit", "vanity": vanity, "toilet": toilet}
+    return render_template("/room_config.html", data=config_data)
 
 
-@app.route("/project/add/<string:floor>/<string:room_type>")
-def room_config(floor: str, room_type: str):
+@app.route("/project/add/<string:floor>")
+def room_config(floor: str):
     project = pickle.loads(session['project_data'])
-    room = None
-    if room_type == "washroom":
-        room = WashRoom()
-    else:
-        room = Room()
-    room.floor = floor
-    room = project.add_room(room)
+    room = Room()
+
     session['project_data'] = pickle.dumps(project)
     vanity = get_material(os.getcwd()+url_for("static", filename="data/vanity.csv"))
     toilet = get_material(os.getcwd()+url_for("static", filename="data/toilet.csv"))
-    config_data = {"room": room, "vanity": vanity, "toilet": toilet}
+    config_data = {"room": room, "operation": "add", "vanity": vanity, "toilet": toilet, "floor": floor}
     return render_template("/room_config.html", data=config_data)
+
+
+@app.route("/project/quote/calculate")
+def quote_calculate():
+    project = pickle.loads(session['project_data'])
+    # cost = calculate(project)
+    cost={}
+    return render_template("/calculate.html", data=cost)
+
+
+@app.route("/project/do/<string:operation>/<string:floor>", methods=['GET', 'POST'])
+def room_doop(operation: str, floor: str):
+    project = None
+    if 'project_data' in session:
+        project = pickle.loads(session['project_data'])
+    else:
+        project = Project()
+        session['project_data'] = pickle.dumps(project)
+    room_type = request.form.get('room_type')
+    if not room_type:
+        return render_template("/project.html", data=project)
+
+    room = None
+    if operation == 'add':
+        if room_type == "washroom":
+            room = WashRoom()
+        elif room_type == "laundry":
+            room = Laundry()
+        else:
+            room = Room()
+        room.floor = floor
+        project.add_room(room)
+    elif operation == 'edit':
+        room = project.find_room_by_id(int(request.form.get('room_id')))
+
+    room.type = request.form.get('room_type')
+    room.name = request.form.get('room_name')
+    room.width = int(request.form.get('room_width'))
+    room.length = int(request.form.get('room_length'))
+    room.height = int(request.form.get('room_height'))
+    room.wall_paint = request.form.get('room_wallpaint')
+    room.baseboard = request.form.get('room_baseboard')
+    if isinstance(room, WashRoom):
+        room.vanity = request.form.get('vanity')
+        room.toilet = request.form.get('toilet')
+        room.shower = request.form.get('shower')
+        room.bathtub = request.form.get('bathtub')
+    if isinstance(room, Laundry):
+        room.watertub = request.form.get('watertub')
+
+    session['project_data'] = pickle.dumps(project)
+    return redirect("/project")
+
 
 
 if __name__ == '__main__':

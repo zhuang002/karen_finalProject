@@ -14,7 +14,7 @@
         <div id="menu" class="menubar">
             <table width="100%" cellspacing="0">
                 <tr>
-                    <td class="menu"><img src="{{url_for('static', filename='img/logo.png')}}" /></td>
+                    <td class="menu"><img src="{{url_for('static', filename='img/logo.png') }}" /></td>
                     <td class="menu" onclick="renderHome(content)"><a>Home</a></td>
                     <td class="menu" onclick="renderService(content)"><a>Services</a></as>
                     </td>
@@ -29,7 +29,7 @@
             {% block content %}
             {% endblock%}
         </div>
-        <div id="footer" style="text-align: center;background: url(static/img/banner.jpg) no-repeat;">
+        <div id="footer" style="text-align: center;background: url('/static/img/banner.jpg') no-repeat;">
             <table style="width:70%; margin-left: auto; margin-right: auto;">
                 <thead>
                     <td class="footinfo footheader"></td>
