@@ -4,6 +4,8 @@ import pickle
 from data_model import Project, Room, WashRoom, Laundry
 import csv
 from data_model import Material
+import mysql.connector
+import json
 
 app = Flask("__main__")
 app.secret_key = 'TMP_SECRET_KEY'
@@ -69,8 +71,8 @@ def room_config(floor: str):
     room = Room()
 
     session['project_data'] = pickle.dumps(project)
-    vanity = get_material(os.getcwd()+url_for("static", filename="data/vanity.csv"))
-    toilet = get_material(os.getcwd()+url_for("static", filename="data/toilet.csv"))
+    vanity = get_material(os.getcwd() + url_for("static", filename="data/vanity.csv"))
+    toilet = get_material(os.getcwd() + url_for("static", filename="data/toilet.csv"))
     config_data = {"room": room, "operation": "add", "vanity": vanity, "toilet": toilet, "floor": floor}
     return render_template("/room_config.html", data=config_data)
 
@@ -79,7 +81,7 @@ def room_config(floor: str):
 def quote_calculate():
     project = pickle.loads(session['project_data'])
     # cost = calculate(project)
-    cost={}
+    cost = {}
     return render_template("/calculate.html", data=cost)
 
 
@@ -127,6 +129,33 @@ def room_doop(operation: str, floor: str):
     return redirect("/project")
 
 
+@app.route('/backend/product/<string:prod_type>')
+def products_by_type(prod_type: str):
+    cnx = mysql.connector.connect(host='localhost', user='emc', password='emc')
+    curs = cnx.cursor(buffered=True)
+    curs.execute('use emc')
+    cnx.commit()
+
+    head = "<html><body>"
+    foot = "</body></html>"
+
+    curs.execute("Select code, name, unitprice from products where type='{}'".format(prod_type))
+    s = ''
+    for record in curs.fetchall():
+        s += record[0] + ',' + record[1] + ',' + str(record[2]) + '\n'
+
+    return head + s + foot
+
+
+@app.route('/test/grideditor')
+def test_gridEditor():
+    return render_template('test_grideditor.html')
+
+@app.route('/test/update_materials')
+def test_update_materials():
+    jsonObj = request.json
+    jsonStr = json.dumps(jsonObj)
+    return jsonStr
 
 if __name__ == '__main__':
     app.run(debug=True)

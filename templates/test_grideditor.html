@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{{ url_for('static', filename='js/grid_editor.js') }}"></script>
+</head>
+<body>
+
+</body>
+</html>
+<script lang="javascript">
+    gridEditor = new GridEditor(
+        ['code','name','description','brand','link','picture','type','unitprice'],
+        [
+            {
+                'code':'V0001',
+                'name':'V0001 Name',
+                'description':'V0001 Description',
+                'brand': 'V0001 Brand',
+                'link': 'V0001 Link',
+                'picture': 'V0001 Pic',
+                'type': 'Vanity',
+                'unitprice':0
+            },
+            {
+                'code':'V0002',
+                'name':'V0002 Name',
+                'description':'V0002 Description',
+                'brand': 'V0002 Brand',
+                'link': 'V0002 Link',
+                'picture': 'V0002 Pic',
+                'type': 'Vanity',
+                'unitprice':0
+            },
+            {
+                'code':'V0003',
+                'name':'V0003 Name',
+                'description':'V0003 Description',
+                'brand': 'V0003 Brand',
+                'link': 'V0003 Link',
+                'picture': 'V0003 Pic',
+                'type': 'Vanity',
+                'unitprice':0
+            },
+            {
+                'code':'V0004',
+                'name':'V0004 Name',
+                'description':'V0004 Description',
+                'brand': 'V0004 Brand',
+                'link': 'V0004 Link',
+                'picture': 'V0004 Pic',
+                'type': 'Vanity',
+                'unitprice':0
+            },
+        ]
+    );
+    document.body.appendChild(gridEditor.getRoot());
+</script>
