@@ -16,7 +16,7 @@ def get_material(csvfile):
     with open(csvfile, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
-            material = Material(row[0], row[1], row[2], row[3], row[4], row[5])
+            material = Material(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
             materials.append(material)
     return materials
 
@@ -59,9 +59,12 @@ def room_delete(room_id: int):
 def room_edit(room_id: int):
     project = pickle.loads(session['project_data'])
     room = project.find_room_by_id(room_id)
-    vanity = get_material(os.getcwd() + url_for("static", filename="data/vanity.csv"))
-    toilet = get_material(os.getcwd() + url_for("static", filename="data/toilet.csv"))
-    config_data = {"room": room, "operation": "edit", "vanity": vanity, "toilet": toilet}
+    vanity = get_material(os.getcwd() + url_for("static", filename="data/vanity-sheet1.csv"))
+    toilet = get_material(os.getcwd() + url_for("static", filename="data/toilets-sheet1.csv"))
+    shower = get_material(os.getcwd() + url_for("static", filename="data/showerheads-sheet1.csv"))
+    bathtub = get_material(os.getcwd() + url_for("static", filename="data/bathtubs-sheet1.csv"))
+    config_data = {"room": room, "operation": "edit", "vanity": vanity, "toilet": toilet, "floor": room.floor,
+                   "shower": shower, "bathtub": bathtub}
     return render_template("/room_config.html", data=config_data)
 
 
@@ -71,18 +74,20 @@ def room_config(floor: str):
     room = Room()
 
     session['project_data'] = pickle.dumps(project)
-    vanity = get_material(os.getcwd() + url_for("static", filename="data/vanity.csv"))
-    toilet = get_material(os.getcwd() + url_for("static", filename="data/toilet.csv"))
-    config_data = {"room": room, "operation": "add", "vanity": vanity, "toilet": toilet, "floor": floor}
+    vanity = get_material(os.getcwd() + url_for("static", filename="data/vanity-sheet1.csv"))
+    toilet = get_material(os.getcwd() + url_for("static", filename="data/toilets-sheet1.csv"))
+    shower = get_material(os.getcwd() + url_for("static", filename="data/showerheads-sheet1.csv"))
+    bathtub = get_material(os.getcwd() + url_for("static", filename="data/bathtubs-sheet1.csv"))
+    config_data = {"room": room, "operation": "add", "vanity": vanity, "toilet": toilet, "floor": room.floor,
+                   "shower": shower, "bathtub": bathtub}
     return render_template("/room_config.html", data=config_data)
 
 
 @app.route("/project/quote/calculate")
 def quote_calculate():
     project = pickle.loads(session['project_data'])
-    # cost = calculate(project)
-    cost = {}
-    return render_template("/calculate.html", data=cost)
+    project.calculate()
+    return render_template("/calculate.html", data=project)
 
 
 @app.route("/project/do/<string:operation>/<string:floor>", methods=['GET', 'POST'])

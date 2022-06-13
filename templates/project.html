@@ -82,6 +82,42 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- Followings are for Laundry -->
+            <table class="room_data">
+                <thead class="room_header">
+                    <tr>
+                        <td>Room Type</td>
+                        <td>Room Name</td>
+                        <td>Width</td>
+                        <td>Length</td>
+                        <td>Height</td>
+                        <td>Wall Paint</td>
+                        <td>Base Board</td>
+                        <td>Faucet</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in data.basement %}
+                    {% if room.type=='washroom'%}
+                    <tr>
+                        <td>{{room.type}}</td>
+                        <td>{{room.name}}</td>
+                        <td>{{room.width}}</td>
+                        <td>{{room.length}}</td>
+                        <td>{{room.height}}</td>
+                        <td>{{room.wall_paint}}</td>
+                        <td>{{room.baseboard}}</td>
+                        <td>{{room.faucet}}</td>
+                        <td><a href="/project/edit/{{room.id}}">edit</a>
+                            /<a href="/project/delete/{{room.id}}">delete</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- End of Laundry -->
             <br>
             <a class="project_button" href="/project/add/main_floor">Add room</a>
             <br>
@@ -165,6 +201,42 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- Followings are for Laundry -->
+            <table class="room_data">
+                <thead class="room_header">
+                    <tr>
+                        <td>Room Type</td>
+                        <td>Room Name</td>
+                        <td>Width</td>
+                        <td>Length</td>
+                        <td>Height</td>
+                        <td>Wall Paint</td>
+                        <td>Base Board</td>
+                        <td>Faucet</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in data.basement %}
+                    {% if room.type=='washroom'%}
+                    <tr>
+                        <td>{{room.type}}</td>
+                        <td>{{room.name}}</td>
+                        <td>{{room.width}}</td>
+                        <td>{{room.length}}</td>
+                        <td>{{room.height}}</td>
+                        <td>{{room.wall_paint}}</td>
+                        <td>{{room.baseboard}}</td>
+                        <td>{{room.faucet}}</td>
+                        <td><a href="/project/edit/{{room.id}}">edit</a>
+                            /<a href="/project/delete/{{room.id}}">delete</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- End of Laundry -->
             <br>
             <a class="project_button" href="/project/add/upper_floor">Add room</a>
             <br>
@@ -173,6 +245,7 @@
         </div>
         <div class="floor" id="basement_rooms">
             <div class="project_subtitle">Basement</div>
+            <!-- following is for generic room -->
             <table class="room_data">
                 <thead class="room_header">
                     <tr>
@@ -207,6 +280,8 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- end of generic rooms -->
+            <!-- Followings are for washroom -->
             <table class="room_data">
                 <thead class="room_header">
                     <tr>
@@ -248,6 +323,43 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <!-- End of Washroom -->
+            <!-- Followings are for Laundry -->
+            <table class="room_data">
+                <thead class="room_header">
+                    <tr>
+                        <td>Room Type</td>
+                        <td>Room Name</td>
+                        <td>Width</td>
+                        <td>Length</td>
+                        <td>Height</td>
+                        <td>Wall Paint</td>
+                        <td>Base Board</td>
+                        <td>Faucet</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in data.basement %}
+                    {% if room.type=='washroom'%}
+                    <tr>
+                        <td>{{room.type}}</td>
+                        <td>{{room.name}}</td>
+                        <td>{{room.width}}</td>
+                        <td>{{room.length}}</td>
+                        <td>{{room.height}}</td>
+                        <td>{{room.wall_paint}}</td>
+                        <td>{{room.baseboard}}</td>
+                        <td>{{room.faucet}}</td>
+                        <td><a href="/project/edit/{{room.id}}">edit</a>
+                            /<a href="/project/delete/{{room.id}}">delete</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- End of Laundry -->
             <br>
             <a class="project_button" href="/project/add/basement">Add room</a>
             <br>
@@ -255,7 +367,7 @@
             <br>
         </div>
         <div style="text-align:center;">
-            <a class="project_button" href="/project/quote/calculate" style="font-size:larger;font-weight:bold">CALCULATE</a>
+            <a class="project_button" onclick="window.open('/project/quote/calculate','_blank').focus()" style="font-size:larger;font-weight:bold;cursor:pointer">CALCULATE</a>
         </div>
     </div>
 </div>
