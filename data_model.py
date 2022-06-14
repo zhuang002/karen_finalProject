@@ -11,14 +11,14 @@ class Room:
         self.width: int = 0
         self.length: int = 0
         self.height: int = 0
-        self.wall_paint: str = None
-        self.baseboard: str = None
+        self.wall = None
+        self.baseboard = None
         self.cost = 0
 
     def calculate(self):
         self.cost = 0
         area = self.length * self.width
-        unit_price = get_unit_price('baseboard.csv', self.baseboard)
+        unit_price = get_unit_price('Hardwood Flooring-Sheet1.csv', self.baseboard)
         self.cost += area * unit_price
 
         area = (self.length + self.width) * self.height * 2
@@ -34,24 +34,48 @@ class WashRoom(Room):
         self.toilet = None
         self.shower = None
         self.bathtub = None
+        self.faucet = None
 
     def calculate(self):
-        super().calculate()
+        self.cost = 0
+        area = self.length * self.width
+        unit_price = get_unit_price('Washroom Floor_Wall-Sheet1.csv', self.baseboard)
+        self.cost += area * unit_price
+
+        area = (self.length + self.width) * self.height * 2
+        unit_price = get_unit_price('Washroom Floor_Wall-Sheet1.csv', self.wall_paint)
+        self.cost += area * unit_price
 
         self.cost += get_unit_price('Vanity-Sheet1.csv', self.vanity)
         self.cost += get_unit_price('Toilets-Sheet1.csv', self.toilet)
         self.cost += get_unit_price('Showerheads-Sheet1.csv', self.shower)
         self.cost += get_unit_price('Bathtubs-Sheet1.csv', self.bathtub)
+        self.cost += get_unit_price('Washroom Faucet-Sheet1.csv', self.bathtub)
 
 
 class Laundry(Room):
     def __init__(self) -> None:
         super().__init__()
+        self.type = "laundry"
         self.watertub = None
 
     def calculate(self):
         super().calculate()
-        self.cost += get_unit_price('watertub.csv', self.watertub)
+        self.cost += get_unit_price('Kitchen Sink.csv', self.watertub)
+
+
+class Kitchen(Room):
+    def __init__(self):
+        super().__init__()
+        self.faucet = None
+        self.sink = None
+        self.rangehood = None
+
+    def calculate(self):
+        super().calculate()
+        self.cost += get_unit_price('Kitchen Faucets-Sheet1.cvs', self.faucet)
+        self.cost += get_unit_price('Kitchen Sink-Sheet1.cvs', self.sink)
+        self.cost += get_unit_price('Range Hoods-Sheet1.csv')
 
 
 class Stair:

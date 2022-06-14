@@ -45,193 +45,387 @@
                     <td>Height</td>
                     <td><input name="room_height" type="text" value="{{data['room'].height}}"></td>
                 </tr>
-                <tr>
-                    <td>Wall Paint</td>
-                    <td>
-                        <input name="room_wallpaint" type="text" value="{{data['room'].wall_paint}}">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Base Board</td>
-                    <td>
-                        <input name="room_baseboard" type="text" value="{{data['room'].baseboard}}">
-                    </td>
-                </tr>
             </table><br><br>
-            {% if data['operation']=='add' %}
-            <div id="vanity_panel" style="display:none">
-            {% elif data['operation'] == 'edit' and data['room'].type=='washroom' %}
-            <div id="vanity_panel">
+
+            {% if data['room'].type=='bedroom'  %}
+            <div id="room_panel" >
+            {% else %}
+            <div id="room_panel" style="display:none>
             {% endif %}
-                <span class="material_title">Vanity</span>
-                <input name="vanity" type="text" value="{{data['room'].vanity}}">
+                <div>
+                    <span class="material_title">Wall</span>
+                    <input name="wall" type="text" value="{{data['room'].wall}}">
+                    <br>
+                    <br>
+                    <div>
+                        {% for mat in data['materials']['room']['wall'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('wall', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br/>
+                <br/>
+
+                <div>
+                    <span class="material_title">Floor</span>
+                    <input name="baseboard" type="text" value="{{data['room'].baseboard}}">
+                    <br>
+                    <br>
+                    <div>
+                        {% for mat in data['materials']['room']['floor'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('wall', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            </div>
+
+            {% if data['room'].type=='washroom'  %}
+            <div id="washroom_panel" >
+            {% else %}
+            <div id="washroom_panel" style="display:none">
+            {% endif %}
+                <div>
+                    <span class="material_title">Vanity</span>
+                    <input name="vanity" type="text" value="{{data['room'].vanity}}">
+                    <br>
+                    <br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['vanity'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('vanity', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <br>
                 <br>
                 <div>
-                    {% for mat in data['vanity'] %}
-                    <div class="material_selection"
-                         onclick="chooseMaterial('vanity', this)"
-                         prodcode="{{mat.code}}">
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td>
-                                    <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_title">
-                                    {{mat.name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_text">
-                                    {{mat.description}}
-                                </td>
-                            </tr>
-                        </table>
+                    <span class="material_title">Toilet</span>
+                    <input name="toilet" type="text" value="{{data['room'].toilet or ''}}">
+                    <br>
+                    <br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['toilet'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('toilet', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-            </div>
-            <br>
-            <br>
-            {% if data['operation'] == 'add' %}
-            <div id="toilet_panel" style="display:none">
-            {% elif data['operation'] == 'edit' and data['room'].type=='washroom' %}
-            <div id="toilet_panel">
-            {% endif %}
-                <span class="material_title">Toilet</span>
-                <input name="toilet" type="text" value="{{data['room'].toilet or ''}}">
                 <br>
                 <br>
+
                 <div>
-                    {% for mat in data['toilet'] %}
-                    <div class="material_selection"
-                         onclick="chooseMaterial('toilet', this)"
-                         prodcode="{{mat.code}}">
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td>
-                                    <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_title">
-                                    {{mat.name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_text">
-                                    {{mat.description}}
-                                </td>
-                            </tr>
-                        </table>
+                    <span class="material_title">Shower</span>
+                    <input name="shower" type="text" value="{{data['room'].shower or ''}}"><br>
+                    <div>
+                        {% for mat in data["materials"]['washroom']['shower'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('shower', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-            </div>
-            {% if data['operation'] == 'add' %}
-            <div id="shower_panel" style="display:none">
-            {% elif data['operation'] == 'edit' and data['room'].type=='washroom' %}
-            <div id="shower_panel">
-            {% endif %}
-                <span class="material_title">Shower</span>
-                <input name="shower" type="text" value="{{data['room'].shower or ''}}"><br>
+                <br>
+                <br>
+
                 <div>
-                    {% for mat in data['shower'] %}
-                    <div class="material_selection"
-                         onclick="chooseMaterial('shower', this)"
-                         prodcode="{{mat.code}}">
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td>
-                                    <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_title">
-                                    {{mat.name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_text">
-                                    {{mat.description}}
-                                </td>
-                            </tr>
-                        </table>
+                    <span class="material_title">Bathtub</span>
+                    <input name="bathtub" type="text" value="{{data['room'].bathtub or ''}}"><br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['bathtub'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('bathtub', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
-            </div>
-            {% if data['operation'] == 'add'%}
-            <div id="bathtub_panel" style="display:none">
-            {% elif data['operation'] == 'edit' and data['room'].type=='washroom' %}
-            <div id="bathtub_panel">
-            {% endif %}
-                <span class="material_title">Bathtub</span>
-                <input name="bathtub" type="text" value="{{data['room'].bathtub or ''}}"><br>
+
                 <div>
-                    {% for mat in data['bathtub'] %}
-                    <div class="material_selection"
-                         onclick="chooseMaterial('bathtub', this)"
-                         prodcode="{{mat.code}}">
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td>
-                                    <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_title">
-                                    {{mat.name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_text">
-                                    {{mat.description}}
-                                </td>
-                            </tr>
-                        </table>
+                    <span class="material_title">Faucet</span>
+                    <input name="faucet" type="text" value="{{data['room'].faucet or ''}}"><br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['faucet'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('faucet', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
+
             </div>
-            {% if data['operation'] == 'add' %}
-            <div id="watertub_panel" style="display:none">
-            {% elif data['operation'] == 'edit' and data['room'].type=='laundry' %}
-            <div id="watertub_panel">
+
+            {% if data['room'].type=='laundry'  %}
+            <div id="laundry_panel" >
+            {% else %}
+            <div id="laundry_panel" style="display:none">
             {% endif %}
-                <span class="material_title">Water Faucet</span>
-                <input name="watertub" type="text" value="{{data['room'].watertub or ''}}"><br>
                 <div>
-                    {% for mat in data['bathtub'] %}
-                    <div class="material_selection"
-                         onclick="chooseMaterial('watertub', this)"
-                         prodcode="{{mat.code}}">
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td>
-                                    <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_title">
-                                    {{mat.name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tp_text">
-                                    {{mat.description}}
-                                </td>
-                            </tr>
-                        </table>
+                    <span class="material_title">Water Tub</span>
+                    <input name="watertub" type="text" value="{{data['room'].watertub or ''}}"><br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['bathtub'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('watertub', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
             <br/>
             <br/>
 
+            {% if data['room'].type=='kitchen'  %}
+            <div id="kitchen_panel" >
+            {% else %}
+            <div id="kitchen_panel" style="display:none">
+            {% endif %}
+                <div>
+                    <span class="material_title">Sink</span>
+                    <input name="watertub" type="text" value="{{data['room'].watertub or ''}}"><br>
+                    <div>
+                        {% for mat in data['materials']['kitchen']['watertub'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('watertub', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <div>
+                    <span class="material_title">Faucet</span>
+                    <input name="faucet" type="text" value="{{data['room'].faucet or ''}}"><br>
+                    <div>
+                        {% for mat in data['materials']['kitchen']['faucet'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('faucet', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br/>
+                <br/>
+
+                <div>
+                    <span class="material_title">Range Hood</span>
+                    <input name="rangehood" type="text" value="{{data['room'].rangehood or ''}}"><br>
+                    <div>
+                        {% for mat in data['materials']['kitchen']['rangehood'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('rangehood', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
+            </div>
 
 
             <input type="submit">

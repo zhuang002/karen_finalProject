@@ -4,7 +4,7 @@ function renderQuote(root) {
     window.location.href = "/quote";
 }
 
-function onWizardFinish(data) {
+/*function onWizardFinish(data) {
     alert(data);
 }
 
@@ -91,7 +91,7 @@ class Wizard {
     }
 
 }
-
+*/
 
 function renderHome(root) {
 
@@ -211,27 +211,54 @@ function chooseMaterial(type, matEle) {
         div = matEle.parentElement.children[i];
         div.className = "material_selection";
     }
-    document.getElementsByName(type)[0].value = matEle.getAttribute('prodcode');
+    matEle.parentElement.parentElement.children[1].value = matEle.getAttribute('prodcode');
     matEle.className = 'material_selected';
 }
 
 function onChangeRoomType(eleSelect) {
-    hideAllEquipments()
-    if (eleSelect.value == "washroom") {
-        document.getElementById("vanity_panel").style.display="";
-        document.getElementById("toilet_panel").style.display="";
-        document.getElementById("shower_panel").style.display="";
-        document.getElementById("bathtub_panel").style.display="";
-    }
-    else if (eleSelect.value == "laundry") {
-        document.getElementById("watertub_panel").style.display="";
-    }
+    hideAllEquipments();
+    var roomtype = eleSelect.value;
+    if (roomtype!='washroom' && roomtype!='kitchen' && roomtype!='laundry' )
+        roomtype='room';
+    document.getElementById(roomtype+"_panel").style.display="";
 }
 
 function hideAllEquipments() {
-    document.getElementById("vanity_panel").style.display="none";
-    document.getElementById("toilet_panel").style.display="none";
-    document.getElementById("shower_panel").style.display="none";
-    document.getElementById("bathtub_panel").style.display="none";
-    document.getElementById("watertub_panel").style.display="none";
+    document.getElementById("room_panel").style.display="none";
+    document.getElementById("washroom_panel").style.display="none";
+    document.getElementById("laundry_panel").style.display="none";
+    document.getElementById("kitchen_panel").style.display="none";
 }
+
+/*function renderMaterialSelections() {
+    var materialSelections = document.getElementsByName("material_selection");
+    for (var i=0;i<materialSelections.length;i++) {
+
+        var ms = materialSelections[i];
+        renderMaterialSelection(ms);
+    }
+}
+
+function renderMaterialSelection(ms) {
+    var title = document.createElement("span");
+    title.innerText = div.getAttribute("title");
+    title.className = "material_title";
+    ms.appendChild(title);
+
+    var input = document.createElement('input');
+    input.type='text';
+    input.name = div.getAttribute("key");
+    input.value = div.getAttribute("value");
+    ms.appendChild(input);
+
+    var br = document.createElement('br');
+    div.append(br);
+    br = document.createElement('br');
+    ms.append(br);
+
+    for (var i=0;i<data.length;i++) {
+        var mat = data[i];
+        var
+    }
+    var div = document.createElement
+}*/
