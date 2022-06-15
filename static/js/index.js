@@ -4,94 +4,6 @@ function renderQuote(root) {
     window.location.href = "/quote";
 }
 
-/*function onWizardFinish(data) {
-    alert(data);
-}
-
-function requireServerData(path) {
-
-}
-
-class Wizard {
-    constructor(onWizardFinish) {
-        this.onFinish = onWizardFinish;
-        this.history = new Array();
-        this.history.push("/");
-        this.current = 0;
-
-
-        this.root=document.createElement("div");
-
-        this.gallery = new Gallery();
-        this.root.appendChild(this.gallery.getRoot());
-
-        this.nav = document.createElement("div")
-        this.root.appendChild(this.nav);
-        this.nav.className = "wizardControl";
-
-        this.back = document.createElement("button")
-        this.back.innerText="BACK";
-        this.back.className = "wizardControl button";
-        this.back.disabled = true;
-        this.back.onClick = this.goBack;
-        this.nav.appendChild(this.back);
-        
-
-        let space = document.createElement("span");
-        space.style.width="80px";
-        this.nav.appendChild(space);
-
-        this.next = document.createElement("button")
-        this.next.innerText="NEXT";
-        this.next.className = "wizardControl button";
-        this.next.disabled = true;
-        this.next.onClick=this.goNext;
-        this.nav.appendChild(this.next);
-
-        var data = requireServerData(this.history[this.current]);
-        this.gallery.setData(data);
-    }
-
-    getRoot() {
-        return this.root;
-    }
-
-    goBack() {
-        if (this.current == 0) 
-            return;
-        this.current--;
-
-        var data = requireServerData(this.history[this.current]);
-        var newGallery = new Gallery();
-        newGallery.setData(data);
-        this.replaceGallery(newGallery,20);
-        this.updateNavigator();
-    }
-
-    goNext() {
-        if (this.current == this.history.length-1) 
-            return;
-        this.current++;
-
-        var data = requireServerData(this.history[this.current]);
-        var newGallery = new Gallery();
-        newGallery.setData(data);
-        this.replaceGallery(newGallery,-20);
-        this.updateNavigator();
-    }
-
-    replaceGallery(newGallery, step) {
-        this.root.replaceChild(newGallery, this.gallery);
-        this.gallery = newGallery;
-    }
-
-    updateNavigator() {
-        this.back.disabled = this.current == 0;
-        this.next.disabled = this.current == this.history.length-1;
-    }
-
-}
-*/
 
 function renderHome(root) {
 
@@ -218,9 +130,10 @@ function chooseMaterial(type, matEle) {
 function onChangeRoomType(eleSelect) {
     hideAllEquipments();
     var roomtype = eleSelect.value;
-    if (roomtype!='washroom' && roomtype!='kitchen' && roomtype!='laundry' )
-        roomtype='room';
-    document.getElementById(roomtype+"_panel").style.display="";
+    if (roomtype!='washroom')
+        document.getElementById("room_panel").style.display="";
+    if (roomtype=='washroom' || roomtype=='laundry' || roomtype=='kitchen')
+        document.getElementById(roomtype+"_panel").style.display="";
 }
 
 function hideAllEquipments() {
@@ -230,35 +143,3 @@ function hideAllEquipments() {
     document.getElementById("kitchen_panel").style.display="none";
 }
 
-/*function renderMaterialSelections() {
-    var materialSelections = document.getElementsByName("material_selection");
-    for (var i=0;i<materialSelections.length;i++) {
-
-        var ms = materialSelections[i];
-        renderMaterialSelection(ms);
-    }
-}
-
-function renderMaterialSelection(ms) {
-    var title = document.createElement("span");
-    title.innerText = div.getAttribute("title");
-    title.className = "material_title";
-    ms.appendChild(title);
-
-    var input = document.createElement('input');
-    input.type='text';
-    input.name = div.getAttribute("key");
-    input.value = div.getAttribute("value");
-    ms.appendChild(input);
-
-    var br = document.createElement('br');
-    div.append(br);
-    br = document.createElement('br');
-    ms.append(br);
-
-    for (var i=0;i<data.length;i++) {
-        var mat = data[i];
-        var
-    }
-    var div = document.createElement
-}*/

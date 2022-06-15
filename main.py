@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, session, redirect, request
 import pickle
-from data_model import Project, Room, WashRoom, Laundry, Kitchen
+from data_model import Project, Room, WashRoom, Laundry, Kitchen, materials_config
 import csv
 from data_model import Material
 import mysql.connector
@@ -11,18 +11,9 @@ app = Flask("__main__")
 app.secret_key = 'TMP_SECRET_KEY'
 
 
-def get_materials():
-    return get_material("Washroom Floor_Wall Tile-Sheet1.csv"), \
-           get_material("Hardwood Flooring-Sheet1.csv"), \
-           get_material("Vanity-Sheet1.csv"), \
-           get_material("Toilets-Sheet1.csv"), \
-           get_material("Showerheads-Sheet1.csv"), \
-           get_material("Bathtubs-Sheet1.csv"), \
-           get_material("Washroom Faucet-Sheet1.csv"), \
-           get_material("Washroom Floor_Wall Tile-Sheet1.csv"), \
-           get_material("Kitchen Faucets-Sheet1.csv"), \
-           get_material("Range Hoods-Sheet1.csv"), \
-           get_material("Kitchen Sink-Sheet1.csv")
+def get_material_by_name(name):
+    fname = materials_config[name]
+    return get_material(fname)
 
 
 def get_material(csvfile):
@@ -74,15 +65,31 @@ def room_delete(room_id: int):
 def room_edit(room_id: int):
     project = pickle.loads(session['project_data'])
     room = project.find_room_by_id(room_id)
-    r_wall, r_floor, w_vanity, w_toilet, w_shower, w_bathtub, w_faucet, w_floor, k_faucet, k_rangewood, k_sink = \
-        get_materials()
-    config_data = {"room": room, "operation": "edit",
-                    "materials": {
-                        "room": { "wall": r_wall, "floor": r_floor},
-                        "washroom":{ "vanity": w_vanity, "toilet": w_toilet, "shower": w_shower, "bathtub": w_bathtub, "faucet": w_faucet, "floor": w_floor},
-                        "kitchen":{ "faucet": k_faucet, "rangewood": k_rangewood, "sink": k_sink}
-                    }
-                }
+
+    config_data = {
+        "room": room, "operation": "edit", 'floor': room.floor,
+        "materials": {
+            "room": {"wall": get_material_by_name('wall'),
+                     "baseboard": get_material_by_name("baseboard")},
+            "washroom": {
+                "wall": get_material_by_name("w_wall"),
+                "vanity": get_material_by_name("w_vanity"),
+                "toilet": get_material_by_name("w_toilet"),
+                "shower": get_material_by_name("w_shower"),
+                "bathtub": get_material_by_name("w_bathtub"),
+                "faucet": get_material_by_name("w_faucet"),
+                "baseboard": get_material_by_name("w_baseboard")
+            },
+            "kitchen": {
+                "faucet": get_material_by_name("k_faucet"),
+                "rangehood": get_material_by_name("k_rangehood"),
+                "watertub": get_material_by_name("k_watertub")
+            },
+            "laundry": {
+                "watertub": get_material_by_name("l_watertub")
+            }
+        }
+    }
     return render_template("/room_config.html", data=config_data)
 
 
@@ -92,16 +99,30 @@ def room_config(floor: str):
     room = Room()
 
     session['project_data'] = pickle.dumps(project)
-    r_wall, r_floor, w_vanity, w_toilet, w_shower, w_bathtub, w_faucet, w_floor, k_faucet, k_rangehood, k_sink = \
-        get_materials()
-    config_data = {"room": room, "operation": "add",
-                   "materials": {
-                       "room": {"wall": r_wall, "floor": r_floor},
-                       "washroom": {"vanity": w_vanity, "toilet": w_toilet, "shower": w_shower, "bathtub": w_bathtub,
-                                    "faucet": w_faucet, "floor": w_floor},
-                       "kitchen": {"faucet": k_faucet, "rangehood": k_rangehood, "watertub": k_sink}
-                   }
-                   }
+    config_data = {
+        "room": room, "operation": "add", 'floor': room.floor,
+        "materials": {
+            "room": {"wall": get_material_by_name('wall'),
+                     "baseboard": get_material_by_name("baseboard")},
+            "washroom": {
+                "wall": get_material_by_name("w_wall"),
+                "vanity": get_material_by_name("w_vanity"),
+                "toilet": get_material_by_name("w_toilet"),
+                "shower": get_material_by_name("w_shower"),
+                "bathtub": get_material_by_name("w_bathtub"),
+                "faucet": get_material_by_name("w_faucet"),
+                "baseboard": get_material_by_name("w_baseboard")
+            },
+            "kitchen": {
+                "faucet": get_material_by_name("k_faucet"),
+                "rangehood": get_material_by_name("k_rangehood"),
+                "watertub": get_material_by_name("k_watertub")
+            },
+            "laundry": {
+                "watertub": get_material_by_name("l_watertub")
+            }
+        }
+    }
     return render_template("/room_config.html", data=config_data)
 
 
@@ -147,17 +168,19 @@ def room_doop(operation: str, floor: str):
     room.wall = request.form.get('wall')
     room.baseboard = request.form.get('baseboard')
     if isinstance(room, WashRoom):
-        room.vanity = request.form.get('vanity')
-        room.toilet = request.form.get('toilet')
-        room.shower = request.form.get('shower')
-        room.bathtub = request.form.get('bathtub')
-        room.faucet = request.form.get('faucet')
+        room.wall = request.form.get('w_wall')
+        room.baseboard = request.form.get('w_baseboard')
+        room.vanity = request.form.get('w_vanity')
+        room.toilet = request.form.get('w_toilet')
+        room.shower = request.form.get('w_shower')
+        room.bathtub = request.form.get('w_bathtub')
+        room.faucet = request.form.get('w_faucet')
     if isinstance(room, Laundry):
-        room.watertub = request.form.get('watertub')
+        room.watertub = request.form.get('l_watertub')
     if isinstance(room, Kitchen):
-        room.watertub = request.form.get('watertub')
-        room.faucet = request.form.get('faucet')
-        room.rangehood = request.form.get('rangehood')
+        room.watertub = request.form.get('k_watertub')
+        room.faucet = request.form.get('k_faucet')
+        room.rangehood = request.form.get('k_rangehood')
 
     session['project_data'] = pickle.dumps(project)
     return redirect("/project")
@@ -185,11 +208,13 @@ def products_by_type(prod_type: str):
 def test_gridEditor():
     return render_template('test_grideditor.html')
 
+
 @app.route('/test/update_materials')
 def test_update_materials():
     jsonObj = request.json
     jsonStr = json.dumps(jsonObj)
     return jsonStr
+
 
 if __name__ == '__main__':
     app.run(debug=True)

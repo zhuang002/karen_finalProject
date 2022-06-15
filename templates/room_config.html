@@ -47,15 +47,14 @@
                 </tr>
             </table><br><br>
 
-            {% if data['room'].type=='bedroom'  %}
+            {% if data['room'].type!='washroom'%}
             <div id="room_panel" >
             {% else %}
-            <div id="room_panel" style="display:none>
+            <div id="room_panel" style="display:none">
             {% endif %}
                 <div>
                     <span class="material_title">Wall</span>
                     <input name="wall" type="text" value="{{data['room'].wall}}">
-                    <br>
                     <br>
                     <div>
                         {% for mat in data['materials']['room']['wall'] %}
@@ -87,12 +86,11 @@
                 <br/>
 
                 <div>
-                    <span class="material_title">Floor</span>
+                    <span class="material_title">Baseboard</span>
                     <input name="baseboard" type="text" value="{{data['room'].baseboard}}">
                     <br>
-                    <br>
                     <div>
-                        {% for mat in data['materials']['room']['floor'] %}
+                        {% for mat in data['materials']['room']['baseboard'] %}
                         <div class="material_selection"
                              onclick="chooseMaterial('wall', this)"
                              prodcode="{{mat.code}}">
@@ -127,9 +125,75 @@
             <div id="washroom_panel" style="display:none">
             {% endif %}
                 <div>
-                    <span class="material_title">Vanity</span>
-                    <input name="vanity" type="text" value="{{data['room'].vanity}}">
+                    <span class="material_title">Wall</span>
+                    <input name="w_wall" type="text" value="{{data['room'].wall}}">
                     <br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['wall'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('wall', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br/>
+                <br/>
+
+                <div>
+                    <span class="material_title">Baseboard</span>
+                    <input name="w_baseboard" type="text" value="{{data['room'].baseboard}}">
+                    <br>
+                    <div>
+                        {% for mat in data['materials']['washroom']['baseboard'] %}
+                        <div class="material_selection"
+                             onclick="chooseMaterial('wall', this)"
+                             prodcode="{{mat.code}}">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="material_pic" src="{{url_for('static',filename='img/'+mat.picture)}}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_title">
+                                        {{mat.name}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tp_text">
+                                        {{mat.description}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <br>
+
+
+                <div>
+                    <span class="material_title">Vanity</span>
+                    <input name="w_vanity" type="text" value="{{data['room'].vanity}}">
                     <br>
                     <div>
                         {% for mat in data['materials']['washroom']['vanity'] %}
@@ -161,8 +225,7 @@
                 <br>
                 <div>
                     <span class="material_title">Toilet</span>
-                    <input name="toilet" type="text" value="{{data['room'].toilet or ''}}">
-                    <br>
+                    <input name="w_toilet" type="text" value="{{data['room'].toilet or ''}}">
                     <br>
                     <div>
                         {% for mat in data['materials']['washroom']['toilet'] %}
@@ -195,7 +258,8 @@
 
                 <div>
                     <span class="material_title">Shower</span>
-                    <input name="shower" type="text" value="{{data['room'].shower or ''}}"><br>
+                    <input name="w_shower" type="text" value="{{data['room'].shower or ''}}">
+                    <br>
                     <div>
                         {% for mat in data["materials"]['washroom']['shower'] %}
                         <div class="material_selection"
@@ -227,7 +291,8 @@
 
                 <div>
                     <span class="material_title">Bathtub</span>
-                    <input name="bathtub" type="text" value="{{data['room'].bathtub or ''}}"><br>
+                    <input name="w_bathtub" type="text" value="{{data['room'].bathtub or ''}}">
+                    <br>
                     <div>
                         {% for mat in data['materials']['washroom']['bathtub'] %}
                         <div class="material_selection"
@@ -254,10 +319,12 @@
                         {% endfor %}
                     </div>
                 </div>
-
+                <br>
+                <br>
                 <div>
                     <span class="material_title">Faucet</span>
-                    <input name="faucet" type="text" value="{{data['room'].faucet or ''}}"><br>
+                    <input name="w_faucet" type="text" value="{{data['room'].faucet or ''}}">
+                    <br>
                     <div>
                         {% for mat in data['materials']['washroom']['faucet'] %}
                         <div class="material_selection"
@@ -294,9 +361,10 @@
             {% endif %}
                 <div>
                     <span class="material_title">Water Tub</span>
-                    <input name="watertub" type="text" value="{{data['room'].watertub or ''}}"><br>
+                    <input name="l_watertub" type="text" value="{{data['room'].watertub or ''}}">
+                    <br>
                     <div>
-                        {% for mat in data['materials']['washroom']['bathtub'] %}
+                        {% for mat in data['materials']['laundry']['watertub'] %}
                         <div class="material_selection"
                              onclick="chooseMaterial('watertub', this)"
                              prodcode="{{mat.code}}">
@@ -332,7 +400,8 @@
             {% endif %}
                 <div>
                     <span class="material_title">Sink</span>
-                    <input name="watertub" type="text" value="{{data['room'].watertub or ''}}"><br>
+                    <input name="k_watertub" type="text" value="{{data['room'].watertub or ''}}">
+                    <br>
                     <div>
                         {% for mat in data['materials']['kitchen']['watertub'] %}
                         <div class="material_selection"
@@ -363,7 +432,8 @@
                 <br/>
                 <div>
                     <span class="material_title">Faucet</span>
-                    <input name="faucet" type="text" value="{{data['room'].faucet or ''}}"><br>
+                    <input name="k_faucet" type="text" value="{{data['room'].faucet or ''}}">
+                    <br>
                     <div>
                         {% for mat in data['materials']['kitchen']['faucet'] %}
                         <div class="material_selection"
@@ -395,7 +465,8 @@
 
                 <div>
                     <span class="material_title">Range Hood</span>
-                    <input name="rangehood" type="text" value="{{data['room'].rangehood or ''}}"><br>
+                    <input name="k_rangehood" type="text" value="{{data['room'].rangehood or ''}}">
+                    <br>
                     <div>
                         {% for mat in data['materials']['kitchen']['rangehood'] %}
                         <div class="material_selection"

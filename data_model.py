@@ -1,5 +1,22 @@
 from typing import List
 import csv
+import os
+
+materials_config = {
+    "wall": "Washroom Floor_Wall Tile-Sheet1.csv",
+    "baseboard": "Hardwood Flooring-Sheet1.csv",
+    "w_wall": "Washroom Floor_Wall Tile-Sheet1.csv",
+    "w_baseboard": "Washroom Floor_Wall Tile-Sheet1.csv",
+    "w_vanity": "Vanity-Sheet1.csv",
+    "w_toilet": "Toilets-Sheet1.csv",
+    "w_shower": "Showerheads-Sheet1.csv",
+    "w_bathtub": "Bathtubs-Sheet1.csv",
+    "w_faucet": "Washroom Faucet-Sheet1.csv",
+    "l_watertub": "Kitchen Sink-Sheet1.csv",
+    "k_watertub": "Kitchen Sink-Sheet1.csv",
+    "k_faucet": "Kitchen Faucets-Sheet1.csv",
+    "k_rangehood": "Range Hoods-Sheet1.csv"
+}
 
 
 class Room:
@@ -18,11 +35,11 @@ class Room:
     def calculate(self):
         self.cost = 0
         area = self.length * self.width
-        unit_price = get_unit_price('Hardwood Flooring-Sheet1.csv', self.baseboard)
+        unit_price = get_unit_price('baseboard', self.baseboard)
         self.cost += area * unit_price
 
         area = (self.length + self.width) * self.height * 2
-        unit_price = get_unit_price('wall_paint.csv', self.wall_paint)
+        unit_price = get_unit_price('wall', self.wall)
         self.cost += area * unit_price
 
 
@@ -39,18 +56,18 @@ class WashRoom(Room):
     def calculate(self):
         self.cost = 0
         area = self.length * self.width
-        unit_price = get_unit_price('Washroom Floor_Wall-Sheet1.csv', self.baseboard)
+        unit_price = get_unit_price('w_wall', self.baseboard)
         self.cost += area * unit_price
 
         area = (self.length + self.width) * self.height * 2
-        unit_price = get_unit_price('Washroom Floor_Wall-Sheet1.csv', self.wall_paint)
+        unit_price = get_unit_price('w_baseboard', self.wall)
         self.cost += area * unit_price
 
-        self.cost += get_unit_price('Vanity-Sheet1.csv', self.vanity)
-        self.cost += get_unit_price('Toilets-Sheet1.csv', self.toilet)
-        self.cost += get_unit_price('Showerheads-Sheet1.csv', self.shower)
-        self.cost += get_unit_price('Bathtubs-Sheet1.csv', self.bathtub)
-        self.cost += get_unit_price('Washroom Faucet-Sheet1.csv', self.bathtub)
+        self.cost += get_unit_price('w_vanity', self.vanity)
+        self.cost += get_unit_price('w_toilet', self.toilet)
+        self.cost += get_unit_price('w_shower', self.shower)
+        self.cost += get_unit_price('w_bathtub', self.bathtub)
+        self.cost += get_unit_price('w_faucet', self.bathtub)
 
 
 class Laundry(Room):
@@ -61,21 +78,21 @@ class Laundry(Room):
 
     def calculate(self):
         super().calculate()
-        self.cost += get_unit_price('Kitchen Sink.csv', self.watertub)
+        self.cost += get_unit_price('l_watertub', self.watertub)
 
 
 class Kitchen(Room):
     def __init__(self):
         super().__init__()
         self.faucet = None
-        self.sink = None
+        self.watertub = None
         self.rangehood = None
 
     def calculate(self):
         super().calculate()
-        self.cost += get_unit_price('Kitchen Faucets-Sheet1.cvs', self.faucet)
-        self.cost += get_unit_price('Kitchen Sink-Sheet1.cvs', self.sink)
-        self.cost += get_unit_price('Range Hoods-Sheet1.csv')
+        self.cost += get_unit_price('k_faucet', self.faucet)
+        self.cost += get_unit_price('k_watertub', self.watertub)
+        self.cost += get_unit_price('k_rangehood', self.rangehood)
 
 
 class Stair:
@@ -157,7 +174,6 @@ class Project:
             self.basement_cost += room.cost
 
 
-
 class Material:
     def __init__(self, code: str, ref: str,  name: str, description: str, brand: str, picture: str, price: float):
         self.code = code
@@ -169,10 +185,11 @@ class Material:
         self.unitprice = price
 
 
-def get_unit_price(file: str, code: str):
-    with open(file, newline='') as csvfile:
+def get_unit_price(name: str, code: str):
+    f = os.getcwd() + "/static/data/" + materials_config[name]
+    with open(f, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in reader:
             if row[0] == code:
-                return row[5]
+                return float(row[6])
     return 0
