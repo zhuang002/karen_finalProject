@@ -38,9 +38,10 @@ class Room:
         unit_price = get_unit_price('baseboard', self.baseboard)
         self.cost += area * unit_price
 
-        area = (self.length + self.width) * self.height * 2
-        unit_price = get_unit_price('wall', self.wall)
-        self.cost += area * unit_price
+
+#        area = (self.length + self.width) * self.height * 2
+#        unit_price = get_unit_price('wall', self.wall)
+#        self.cost += area * unit_price
 
 
 class WashRoom(Room):
@@ -116,6 +117,7 @@ class Project:
         self.main_floor_cost = 0
         self.upper_floor_cost = 0
         self.basement_cost = 0
+        self.paint_cost = 0
 
     def add_room(self, room: Room) -> Room:
         room.id = self.id_count
@@ -158,20 +160,30 @@ class Project:
         self.main_floor_cost = 0
         self.upper_floor_cost = 0
         self.basement_cost = 0
+        self.wall_area = 0
         for room in self.main_floor:
             room.calculate()
             self.cost += room.cost
             self.main_floor_cost += room.cost
+            if not isinstance(room, WashRoom):
+                self.wall_area += (room.width + room.length)*2*room.height
 
         for room in self.upper_floor:
             room.calculate()
             self.cost += room.cost
             self.upper_floor_cost += room.cost
+            if not isinstance(room, WashRoom):
+                self.wall_area += (room.width + room.length) * 2 * room.height
 
         for room in self.basement:
             room.calculate()
             self.cost += room.cost
             self.basement_cost += room.cost
+            if not isinstance(room, WashRoom):
+                self.wall_area += (room.width + room.length) * 2 * room.height
+
+        self.paint_cost = self.wall_area*85.0/400
+        self.cost += self.paint_cost
 
 
 class Material:

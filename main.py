@@ -100,7 +100,7 @@ def room_config(floor: str):
 
     session['project_data'] = pickle.dumps(project)
     config_data = {
-        "room": room, "operation": "add", 'floor': room.floor,
+        "room": room, "operation": "add", 'floor': floor,
         "materials": {
             "room": {"wall": get_material_by_name('wall'),
                      "baseboard": get_material_by_name("baseboard")},
@@ -165,7 +165,7 @@ def room_doop(operation: str, floor: str):
     room.width = int(request.form.get('room_width'))
     room.length = int(request.form.get('room_length'))
     room.height = int(request.form.get('room_height'))
-    room.wall = request.form.get('wall')
+#    room.wall = request.form.get('wall')
     room.baseboard = request.form.get('baseboard')
     if isinstance(room, WashRoom):
         room.wall = request.form.get('w_wall')

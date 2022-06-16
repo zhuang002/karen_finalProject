@@ -4,45 +4,50 @@
 <table>
     <tr>
         <td>Main Floor: </td>
-        <td>CA${{data.main_floor_cost}}</td>
+        <td>CA${{"{:.2f}".format(data.main_floor_cost)}}</td>
         <td></td>
     </tr>
     {% for room in data.main_floor %}
     <tr>
         <td></td>
         <td>{{room.name}}</td>
-        <td>CA${{room.cost}}</td>
+        <td>CA${{"{:.2f}".format(room.cost)}}</td>
     </tr>
     {% endfor %}
 
     <tr>
         <td>Upper Floor: </td>
-        <td>CA${{data.upper_floor_cost}}</td>
+        <td>CA${{"{:.2f}".format(data.upper_floor_cost)}}</td>
         <td></td>
     </tr>
     {% for room in data.upper_floor %}
     <tr>
         <td></td>
         <td>{{room.name}}</td>
-        <td>CA${{room.cost}}</td>
+        <td>CA${{"{:.2f}".format(room.cost)}}</td>
     </tr>
     {% endfor %}
 
     <tr>
         <td>Basement: </td>
-        <td>CA${{data.basement_cost}}</td>
+        <td>CA${{"{:.2f}".format(data.basement_cost)}}</td>
         <td></td>
     </tr>
     {% for room in data.basement %}
     <tr>
         <td></td>
         <td>{{room.name}}</td>
-        <td>CA${{room.cost}}</td>
+        <td>CA${{"{:.2f}".format(room.cost)}}</td>
     </tr>
     {% endfor %}
     <tr>
+        <td>Paint cost: </td>
+        <td>CA${{"{:.2f}".format(data.paint_cost)}}</td>
+        <td></td>
+    </tr>
+    <tr>
         <td>Total: </td>
-        <td>CA${{data.cost}}</td>
+        <td>CA${{"{:.2f}".format(data.cost)}}</td>
         <td></td>
     </tr>
 </table>

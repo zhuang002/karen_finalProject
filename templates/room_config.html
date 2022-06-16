@@ -48,11 +48,11 @@
             </table><br><br>
 
             {% if data['room'].type!='washroom'%}
-            <div id="room_panel" >
+            <div id="room_panel">
             {% else %}
             <div id="room_panel" style="display:none">
             {% endif %}
-                <div>
+                <div style="display:none">
                     <span class="material_title">Wall</span>
                     <input name="wall" type="text" value="{{data['room'].wall}}">
                     <br>
@@ -86,7 +86,7 @@
                 <br/>
 
                 <div>
-                    <span class="material_title">Baseboard</span>
+                    <span class="material_title">Flooring</span>
                     <input name="baseboard" type="text" value="{{data['room'].baseboard}}">
                     <br>
                     <div>
@@ -158,7 +158,7 @@
                 <br/>
 
                 <div>
-                    <span class="material_title">Baseboard</span>
+                    <span class="material_title">Flooring</span>
                     <input name="w_baseboard" type="text" value="{{data['room'].baseboard}}">
                     <br>
                     <div>
